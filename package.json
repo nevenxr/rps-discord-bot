@@ -1,0 +1,12 @@
+{
+  "name": "rps-discord-bot",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "repository": "https://github.com/nevenxr/rps-discord-bot",
+  "author": "Neven",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^13.6.0",
+    "dotenv": "^16.0.0"
+  }
+}
