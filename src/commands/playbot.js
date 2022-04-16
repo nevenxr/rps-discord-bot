@@ -1,4 +1,5 @@
 const { MessageEmbed } = require("discord.js");
+const { addWin, addLose } = require("../functions/database");
 
 const choices = [
     "rock",
@@ -40,7 +41,7 @@ module.exports = {
         ]
     },
 
-    interact: (interaction) => {
+    interact: async (interaction) => {
         const chose = interaction.options.getString("throw");
         var botChoice = null;
         var whoWins = null;
@@ -105,9 +106,16 @@ module.exports = {
 
         var winType = "";
 
-        if (whoWins === "user") winType = "won"
+        if (whoWins === "user") {
+            winType = "won";
+            await addWin(interaction.user.id, "bots", 1);
+        };
+        
         if (whoWins === "draw") winType = "drawn";
-        if (whoWins === "bot") winType = "lost";
+        if (whoWins === "bot") {
+            winType = "lost";
+            await addLose(interaction.user.id, "bots", 1);
+        };
 
         var text = `${interaction.user.username} ${winType} the battle against the bot`;
         return interaction.reply({
