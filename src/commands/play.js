@@ -23,16 +23,20 @@ module.exports = {
         const opponent = interaction.options.getMember("opponent");
         const { client } = global;
 
+        if (!interaction.channel.permissionsFor(interaction.guild.me).has(["MANAGE_MESSAGES", "ADD_REACTIONS"])) {
+            return;
+        };
+
         if (opponent.user.bot) {
             return interaction.reply({
                 content: ":x: You can't battle a bot!\nPlay `/playbot` instead."
-            });
+            }).catch(() => {});;
         };
 
         if (opponent.user.id === interaction.user.id) {
             return interaction.reply({
                 content: ":x: You can't battle yourself!\nPlay `/playbot` instead."
-            });
+            }).catch(() => {});;
         };
 
         const isPlaying = client.playing.get(opponent.user.id);
@@ -40,7 +44,7 @@ module.exports = {
         if (isPlaying) {
             return interaction.reply({
                 content: `:x: ${opponent.user.username} is already in battle with someone.`
-            });
+            }).catch(() => {});;
         };
 
         const req = await interaction.reply({
@@ -49,37 +53,52 @@ module.exports = {
                 getRequestEmbed(interaction).addField("Battle", "Awaiting :stopwatch:", true)
             ],
             fetchReply: true
-        });
+        }).catch(() => {});;
 
-        await req.react("✅");
-        await req.react("❌");
+        await req.react("✅").catch(() => {});
+        await req.react("❌").catch(() => {});
 
         const reactCollector = req.createReactionCollector({
             filter: (r, u) => u.id === opponent.user.id,
-            time: 15000
+            time: 30000,
+            max: 1
         });
+
+        var reacted = false;
 
         reactCollector.on("collect", async (react) => {
             if (react.emoji.name === "✅") {
+                reacted = true;
                 global.client.playing.set(opponent.user.id, true);
                 req.edit({
                     embeds: [
                         getRequestEmbed(interaction).addField("Battle", "Accepted :white_check_mark:", true)
                     ]
-                });
+                }).catch(() => {});;
 
-                await req.reactions.removeAll();
+                await req.reactions.removeAll().catch(() => {});
                 await startRPS(interaction, interaction.member, opponent);
             };
 
             if (react.emoji.name === "❌") {
+                reacted = true
                 req.edit({
                     embeds: [
                         getRequestEmbed(interaction).addField("Battle", "Rejected :x:", true)
                     ]
-                });
+                }).catch(() => {});
 
                 await req.reactions.removeAll();
+            };
+        });
+
+        reactCollector.on("end", async () => {
+            if (!reacted) {
+                await req.edit({
+                    embeds: [
+                        getRequestEmbed(interaction).addField("Battle", "Timed out! :stopwatch:", true)
+                    ]
+                }).catch(() => {});
             };
         });
     },
