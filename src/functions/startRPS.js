@@ -30,9 +30,9 @@ async function startRPS (interaction, player, opponent) {
     await opponentDM.react("✂️");
 
     const opponentCollector = await opponentDM.createReactionCollector({
+        filter: (r, u) => u.id === opponent.user.id,
         time: 15000,
         max: 1,
-        filter: (r, u) => u.id === opponent.user.id
     });
 
     var opponentChoice = null;
@@ -96,9 +96,9 @@ async function startRPS (interaction, player, opponent) {
         await playerDM.react("✂️");
     
         const playerCollector = await playerDM.createReactionCollector({
+            filter: (r, u) => u.id === player.user.id,
             time: 15000,
             max: 1,
-            filter: (r, u) => u.id === player.user.id
         });
 
         playerCollector.on("collect", async (react) => {
