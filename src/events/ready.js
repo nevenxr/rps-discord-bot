@@ -4,8 +4,10 @@ module.exports = {
         const { client } = global;
 
         console.log(`${client.user?.username} is now online`);
-        client.user.setActivity("rps help", {
-            type: "WATCHING"
-        });
+        setInterval(() => {
+            client.user.setActivity(`/help | ${client.guilds.cache.size} Guilds`, {
+                type: "LISTENING"
+            });
+        }, 1000 * 20);
     },
 };
