@@ -10,6 +10,7 @@ exports.Client = class RPS extends Client {
     constructor (options) {
         super(options);
         this.commands = new Collection();
+        this.playing = new Collection();
         
         listenEvents(this);
         loadCommands(this);
