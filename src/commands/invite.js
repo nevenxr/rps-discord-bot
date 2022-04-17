@@ -5,7 +5,7 @@ module.exports = {
     },
     interact: (interaction) => {
         return interaction.reply({
-            content: "[Click here to add to your server](https://discord.com/api/oauth2/authorize?client_id=964850934419173466&permissions=52288&scope=bot%20applications.commands)"
+            content: "[Click here to add to your server](https://discord.com/api/oauth2/authorize?client_id=964850934419173466&permissions=355392&scope=bot%20applications.commands)"
         }).catch(() => {});
     },
 };
