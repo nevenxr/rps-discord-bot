@@ -10,7 +10,7 @@ const mongoose = require("mongoose");
 global.client = new client({
     token: process.env.TOKEN,
     shards: "auto",
-    intents: ["GUILDS", "GUILD_MESSAGES"]
+    intents: ["GUILDS", "GUILD_MESSAGES", "GUILD_MESSAGE_REACTIONS", "DIRECT_MESSAGE_REACTIONS"]
 });
 
 process.on("uncaughtException", console.error);
