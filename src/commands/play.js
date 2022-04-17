@@ -94,6 +94,7 @@ module.exports = {
 
         reactCollector.on("end", async () => {
             if (!reacted) {
+                await req.reactions.removeAll();
                 await req.edit({
                     embeds: [
                         getRequestEmbed(interaction).addField("Battle", "Timed out! :stopwatch:", true)
