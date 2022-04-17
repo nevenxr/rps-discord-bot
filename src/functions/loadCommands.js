@@ -17,6 +17,7 @@ exports.loadCommands = function (client) {
     };
 
     client.once("ready", () => {
-        client.guilds.cache.get("935384834250006569").commands.set(commands);
+        client.application.commands.set([]);
+        client.application.commands.set(commands);
     })
 };
