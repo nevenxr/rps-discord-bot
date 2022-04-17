@@ -6,9 +6,10 @@ const emojis = {
     scissors: ":scissors:",
 };
 
-const { client } = global;
 
 async function startRPS (interaction, player, opponent) {
+    const { client } = global;
+    
     const opponentDM = await opponent.user.send({
         embeds: [
             getBattleEmbed(player)
@@ -53,6 +54,9 @@ async function startRPS (interaction, player, opponent) {
     });
 
     opponentCollector.on("end", async () => {
+        client.playing.delete(opponent.user.id);
+        client.playing.delete(player.user.id);
+
         if (!opponentChoice) {
             await opponentDM.edit({
                 embeds: [
@@ -116,6 +120,9 @@ async function startRPS (interaction, player, opponent) {
         });
 
         playerCollector.on("end", async () => {
+            client.playing.delete(opponent.user.id);
+            client.playing.delete(player.user.id);
+
             if (!playerChoice) {
                 await playerDM.edit({
                     embeds: [
