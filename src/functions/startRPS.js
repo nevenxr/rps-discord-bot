@@ -60,7 +60,7 @@ async function startRPS (interaction, player, opponent) {
         if (!opponentChoice) {
             await opponentDM.edit({
                 embeds: [
-                    getBattleEmbed(player)
+                    getBattleEmbed(opponent)
                     .addField("Your Choice", "Timed out! :stopwatch:", true)
                 ]
             }).catch(() => {});
@@ -69,7 +69,7 @@ async function startRPS (interaction, player, opponent) {
         } else {
             await opponentDM.edit({
                 embeds: [
-                    getBattleEmbed(player)
+                    getBattleEmbed(opponent)
                     .addField("Your Choice", `${emojis[opponentChoice]}`, true)
                 ]
             }).catch(() => {});
