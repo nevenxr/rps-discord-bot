@@ -12,7 +12,7 @@ async function startRPS (interaction, player, opponent) {
     
     const opponentDM = await opponent.user.send({
         embeds: [
-            getBattleEmbed(player)
+            getBattleEmbed(opponent)
                 .addField("Your Choice", "Awaiting :stopwatch:", true)
         ]
     }).catch(() => false);
