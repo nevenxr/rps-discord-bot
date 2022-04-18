@@ -12,7 +12,7 @@ async function startRPS (interaction, player, opponent) {
     
     const opponentDM = await opponent.user.send({
         embeds: [
-            getBattleEmbed(opponent)
+            getBattleEmbed(player)
                 .addField("Your Choice", "Awaiting :stopwatch:", true)
         ]
     }).catch(() => false);
@@ -60,7 +60,7 @@ async function startRPS (interaction, player, opponent) {
         if (!opponentChoice) {
             await opponentDM.edit({
                 embeds: [
-                    getBattleEmbed(opponent)
+                    getBattleEmbed(player)
                     .addField("Your Choice", "Timed out! :stopwatch:", true)
                 ]
             }).catch(() => {});
@@ -69,7 +69,7 @@ async function startRPS (interaction, player, opponent) {
         } else {
             await opponentDM.edit({
                 embeds: [
-                    getBattleEmbed(opponent)
+                    getBattleEmbed(player)
                     .addField("Your Choice", `${emojis[opponentChoice]}`, true)
                 ]
             }).catch(() => {});
@@ -81,7 +81,7 @@ async function startRPS (interaction, player, opponent) {
     async function getPlayerChoice () {
         const playerDM = await player.user.send({
             embeds: [
-                getBattleEmbed(player)
+                getBattleEmbed(opponent)
                     .addField("Your Choice", "Awaiting :stopwatch:", true)
             ]
         }).catch(() => false);
@@ -126,7 +126,7 @@ async function startRPS (interaction, player, opponent) {
             if (!playerChoice) {
                 await playerDM.edit({
                     embeds: [
-                        getBattleEmbed(player)
+                        getBattleEmbed(opponent)
                         .addField("Your Choice", "Timed out! :stopwatch:", true)
                     ]
                 }).catch(() => {});
@@ -135,7 +135,7 @@ async function startRPS (interaction, player, opponent) {
             } else {
                 await playerDM.edit({
                     embeds: [
-                        getBattleEmbed(player)
+                        getBattleEmbed(opponent)
                         .addField("Your Choice", `${emojis[playerChoice]}`, true)
                     ]
                 }).catch(() => {});
@@ -191,12 +191,12 @@ function sendTimeoutMessage (interaction, player, opponent, tby) {
     }).catch(() => {});
 };
 
-function getBattleEmbed(player) {
+function getBattleEmbed(opponent) {
     const battleEmbed = new MessageEmbed()
         .setTitle(":crossed_swords: Battle")
-        .setThumbnail(player.user.displayAvatarURL({ dynamic: true }))
+        .setThumbnail(opponent.user.displayAvatarURL({ dynamic: true }))
         .setColor(8948363)
-        .setDescription(`You are in battle with ${player.user.username}`)
+        .setDescription(`You are in battle with ${opponent.user.username}`)
         .addField("Mode", "PvP", true)
         .setTimestamp()
 
