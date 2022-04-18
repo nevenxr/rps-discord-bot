@@ -17,7 +17,14 @@ exports.loadCommands = function (client) {
     };
 
     client.once("ready", () => {
-        client.application.commands.set([]);
-        client.application.commands.set(commands);
-    })
+        commands.forEach(cmd => {
+            const cache = client.application.commands.cache;
+
+            if (cache.size === 0) {
+                client.application.commands.set(commands);
+            } else if (!cache.has(cmd.options.name)) {
+                client.application.commands.create(cmd.options.name);
+            };
+        });
+    });
 };
